@@ -1,0 +1,198 @@
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+  setlocale(LC_ALL, "portuguese"); // mudança de idioma
+
+  int numDigitado;
+  int senha[5] = {3, 1, 3, 2, 3};
+  //int senhaObtidaUsuario[5] = {0, 0, 0, 0, 0}; // 0 1 5 7 9
+  int tentativa = 0;
+  int movimentos = 0;
+  int barraCofre[20] = {5, 9, 1, 7, 5, 5, 9, 0, 7, 1, 5, 9, 1, 7, 5, 5, 9, 0, 7, 1};
+  int qtdDeslizamento = 0;
+  int i, j;
+  int num0=0, num1=0, num5=0, num7=0, num9=0;
+  int posicao = 1;
+  int alvo;
+
+  while (tentativa < 3)
+  {
+    num0 = 0,num1 =0,num5=0,num7=0,num9=0;
+    tentativa++;
+    printf("\nDigite a quantidade de deslizamento: ");
+    scanf("%d",&qtdDeslizamento);
+    for (movimentos = 0; movimentos < qtdDeslizamento; movimentos++)
+    {
+      printf("%i %i %i %i %i\n", num0, num1, num5, num7, num9);
+      printf("\n\t\tDigite seu movimento: "); // aqui tem a leitura da casa que irá
+      scanf("%d", &numDigitado);
+
+      if (numDigitado>0 && numDigitado<=20)
+      {
+        if (movimentos == 0)
+        {
+          alvo = numDigitado;
+          for (i = 0; i < alvo; i++ && posicao++)
+          {
+            if (barraCofre[i] == 0)
+            {
+              num0++;
+            }
+            else if (barraCofre[i] == 1)
+            {
+              num1++;
+            }
+            else if (barraCofre[i] == 5)
+            {
+              num5++;
+            }
+            else if (barraCofre[i] == 7)
+            {
+              num7++;
+            }
+            else
+            {
+              num9++;
+            }
+          }
+          posicao --;
+        }
+        else
+        {
+          alvo = posicao+numDigitado;
+          posicao++;
+          for (i = posicao; i <= alvo; i++ && posicao++)
+          {
+            if (barraCofre[i] == 0)
+            {
+              num0++;
+            }
+            else if (barraCofre[i] == 1)
+            {
+              num1++;
+            }
+            else if (barraCofre[i] == 5)
+            {
+              num5++;
+            }
+            else if (barraCofre[i] == 7)
+            {
+              num7++;
+            }
+            else
+            {
+              num9++;
+            }
+          }
+          posicao --;
+        }
+      }
+
+        // verificação se ele tá dentro do intervalo da barra
+
+      else if (numDigitado<0 && numDigitado>=-20)
+      {
+        if (movimentos == 0)
+        {
+          alvo = numDigitado;
+          for (j = 0; j > alvo; j-- && posicao--)
+          {
+            if (barraCofre[j] == 0)
+            {
+              num0++;
+            }
+            else if (barraCofre[j] == 1)
+            {
+              num1++;
+            }
+            else if (barraCofre[j] == 5)
+            {
+              num5++;
+            }
+            else if (barraCofre[j] == 7)
+            {
+              num7++;
+            }
+            else
+            {
+              num9++;
+            }
+          }
+          posicao++;
+        }
+        else
+        {
+          alvo = posicao+numDigitado;
+          posicao--;
+          for (j = posicao ; j >= alvo; j-- && posicao--)
+          {
+            if (barraCofre[j] == 0)
+            {
+              num0++;
+            }
+            else if (barraCofre[j] == 1)
+            {
+              num1++;
+            }
+            else if (barraCofre[j] == 5)
+            {
+              num5++;
+            }
+            else if (barraCofre[j] == 7)
+            {
+              num7++;
+            }
+            else
+            {
+              num9++;
+            }
+          }
+          posicao++;
+        }
+      }
+
+      else
+      {
+        printf("\n\tImpossivel digitar numero fora do range (-20 ... 20)");
+        break;
+      }
+
+
+
+      // for pra ir indo nos elementos da barra, tem que ter em mente que o
+      // usuário pode digitar numeros maiores do que a posição atual e menores,
+      // ou seja ele tem que ir pra frente e pra tras o controle... e ele já vai
+      // adicionando os elementos no senhaObtidaUsuario }
+
+
+    }
+    printf("\nA senha obtida é [%d]-[%d]-[%d]-[%d]-[%d]",num0,num1,num5,num7,num9);
+
+
+
+    if (num0 == 3 && num1 == 1 && num5 == 3 && num7 == 2 && num9 == 3)
+      {
+        printf("\n\nA senha está correta! COFRE ABERTO ");
+      }
+    else
+      {
+        printf("\n\nA senha está incorreta! COFRE ESTÁ TRANCADO\n");
+      }
+
+
+    }
+    // aqui ele verifica se a senha bate, se bater termina o programa se n
+    // retira ++ uma tentativa }
+  }
+
+
+
+
+
+
+
+
